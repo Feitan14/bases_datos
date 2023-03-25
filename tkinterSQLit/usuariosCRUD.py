@@ -1,6 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+from controladorBD import * #1. presentamos los archivos controlodador vista
+
+#2. creamos un objeto de clase controlador
+controlador = controladorBD()
+
+#3. funcion para disparar un boton
+def ejecutaIntsert():
+    controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
+
 
 ventana = Tk()
 ventana.title("CRUD de usuarios")
@@ -17,6 +26,7 @@ pestana4 = ttk.Frame(panel)
 
 titulo = Label(pestana1, text="Registro de usuarios", fg='blue', font=('Modern',18)).pack()
 
+#agregamos los 
 varNom =tk.StringVar()
 lblNom = Label(pestana1, text= "nombre: ").pack()
 textNom = Entry(pestana1, textvariable=varNom).pack()
@@ -29,7 +39,7 @@ varCon =tk.StringVar()
 lblCon = Label(pestana1, text= "Contraseña: ").pack()
 textCon = Entry(pestana1, textvariable=varCon).pack()
 
-btnGuardar = Button(pestana1, text="Guardar Usuario").pack()
+btnGuardar = Button(pestana1, text="Guardar Usuario",command=ejecutaIntsert).pack()
 
 #agregamos los textos que iran dentro de las pestañas
 panel.add(pestana1, text='Formulario de usuario')
