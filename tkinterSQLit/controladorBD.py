@@ -10,7 +10,7 @@ class controladorBD:
             conexion = sqlite3.connect("C:/Users/andy2/OneDrive/Documentos/GitHub/bases_datos/tkinterSQLit/DBUsuarios.db")
             print("conectado a la BD")
             return conexion 
-        
+        #
         except sqlite3.OperationalError:
             print("no se pudo conectar")
 
@@ -43,8 +43,30 @@ class controladorBD:
         conPlana = conPlana.encode() #convertimos con a bytes
         sal = bcrypt.gensalt()
         conHa = bcrypt.hashpw(conPlana,sal)
-        print(conHa)
+        print(conHa)        
         
         #enviamos la contraseña incriptada
         return conHa
         
+            #Metodo para buscar 1 usuario
+    
+    def consultarUsuario(self,id):
+        # 1. preparar una conexion
+        conx = self.conexionBD()
+        #2. verificar si el parametro id contiene algo
+        if(id == ""):
+            messagebox.showwarning("cuidado id vacio, escribe algo valido")
+            conx.close()
+        else:
+            try:
+                #3. preparamos lo necesario, cursor y query
+                cursor = conx.cursor()
+                selectQry = "selec * from TBRegistrados where id = "+id
+                #4. ejecutar y guardar la consulta
+                cursor.execute(selectQry)
+                rsUsuario = cursor.fetchall()
+                conx.close()
+                return rsUsuario
+            
+            except sqlite3.OperationalError:
+                print("error consulta")
